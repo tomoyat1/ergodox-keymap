@@ -9,6 +9,7 @@ enum custom_keycodes {
   VRSN,
   RGB_SLD,
   VIM_O,
+  VIM_SHIFT_O,
   VIM_A,
   VIM_CAPITAL_A
 };
@@ -105,23 +106,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_DEL,     KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    TO(0),      KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
                     KC_TRNS,    KC_TRNS,    KC_TRNS,
                 //right hand
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_TRNS,    KC_TRNS,    TO(0),      KC_TRNS,    KC_TRNS,        KC_TRNS,
-                            KC_LEFT,    KC_DOWN,    KC_UP,     KC_RGHT,    KC_TRNS,        KC_TRNS,
+                KC_TRNS,    KC_TRNS,    KC_TRNS,    TO(0),      VIM_O,      KC_TRNS,        KC_TRNS,
+                            KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
 
-  // Layer 4: Emoji
-  [4] = KEYMAP(
+  // Layer 5: Emoji
+  [5] = KEYMAP(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
@@ -188,10 +189,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case VIM_O:
       if (record->event.pressed) {
+        SEND_STRING (SS_TAP(X_END)SS_TAP(X_ENTER));
+        layer_off(4);
       }
       return false;
       break;
-    
+    case VIM_SHIFT_O:
+      if (record->event.pressed) {
+        SEND_STRING (SS_TAP(X_HOME)SS_TAP(X_ENTER));
+        layer_off(4);
+        SEND_STRING (SS_TAP(X_UP));
+      }
+      return false;
+      break;
   }
   return true;
 }
