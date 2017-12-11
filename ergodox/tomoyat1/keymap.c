@@ -3,6 +3,8 @@
 #include "action_layer.h"
 #include "version.h"
 
+#define TAPPING_TERM 200
+
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   EPRM,
@@ -12,7 +14,26 @@ enum custom_keycodes {
   VIM_O,
   VIM_SHIFT_A,
   VIM_SHIFT_I,
-  VIM_SHIFT_O
+  VIM_SHIFT_O,
+  VIM_U,
+  VIM_X,
+  VIM_V,
+  VIM_SHIFT_V,
+  VIM_VS_DW,
+  VIM_VS_UP,
+  VIM_ESC_VIS,
+  VIM_Y,
+  VIM_P,
+  VIM_SHIFT_P,
+};
+
+int is_visual_mode = false;
+int is_visual_line_mode = false;
+int is_clipboard_visual_line = false;
+
+enum tap_dance_keycodes {
+  VIM_DD,
+  VIM_YY
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -104,21 +125,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Layer 4: Universal vim controls
   [4] = KEYMAP(
                 //left hand
+                KC_NO,          KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        VIM_A,      KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_DEL,     KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        VIM_A,      KC_TRNS,    TD(VIM_DD), KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    VIM_X,      KC_TRNS,    VIM_V,      KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
                     KC_TRNS,    KC_TRNS,    KC_TRNS,
                 //right hand
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_TRNS,    KC_TRNS,    TO(0),      VIM_O,      KC_TRNS,        KC_TRNS,
+                KC_TRNS,    TD(VIM_YY), VIM_U,      TO(0),      VIM_O,      VIM_P,          KC_TRNS,
                             KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_TRNS,
+                KC_TRNS,    VIM_ESC_VIS,
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    MO(5)),
 
@@ -129,6 +150,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        VIM_SHIFT_A,KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                                KC_TRNS,    KC_TRNS,
+                                            KC_TRNS,
+                    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                //right hand
+                KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
+                KC_TRNS,    KC_TRNS,    KC_TRNS,    VIM_SHIFT_I,VIM_SHIFT_O,KC_TRNS,        KC_TRNS,
+                            KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_LEAD,        KC_TRNS,
+                KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
+                                        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
+                KC_TRNS,    KC_TRNS,
+                KC_TRNS,
+                KC_TRNS,    KC_TRNS,    KC_TRNS),
+  // Layer 6: Universal vim controls visual line
+  [6] = KEYMAP(
+                //left hand
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_NO,      KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,      KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
@@ -136,15 +177,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 //right hand
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    VIM_SHIFT_I,VIM_SHIFT_O,KC_TRNS,        KC_TRNS,
-                            KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_TRNS,        KC_TRNS,
+                            KC_NO,      VIM_VS_DW,  VIM_VS_UP,  KC_NO,      KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
-
-  // Layer 6: Emoji
-  [6] = KEYMAP(
+  // Layer 9: Emoji
+  [9] = KEYMAP(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
@@ -248,8 +288,197 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case VIM_DD:
+      if (record->event.pressed) {
+        SEND_STRING (SS_TAP(X_HOME));
+        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_TAP(X_END));
+        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_LCTRL("x"));
+        SEND_STRING (SS_TAP(X_DELETE));
+      }
+      return false;
+      break;
+    case VIM_P:
+      if (record->event.pressed) {
+        if (is_clipboard_visual_line) {
+          SEND_STRING (SS_TAP(X_END)SS_TAP(X_ENTER));
+          SEND_STRING (SS_LCTRL("v"));
+        } else {
+          SEND_STRING (SS_TAP(X_RIGHT));
+          SEND_STRING (SS_LCTRL("v"));
+        }
+      }
+      return false;
+      break;
+    case VIM_SHIFT_P:
+      if (record->event.pressed) {
+        if (is_clipboard_visual_line) {
+          SEND_STRING (SS_TAP(X_HOME)SS_TAP(X_ENTER));
+          SEND_STRING (SS_LCTRL("v"));
+        } else {
+          SEND_STRING (SS_LCTRL("v"));
+        }
+      }
+      return false;
+      break;
+    case VIM_U:
+      if (record->event.pressed) {
+        SEND_STRING (SS_LCTRL("z"));
+      }
+      return false;
+      break;
+    case VIM_V:
+      if (record->event.pressed) {
+        is_visual_mode = true;
+        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_TAP(X_RIGHT));
+      }
+      return false;
+      break;
+    case VIM_SHIFT_V:
+      if (record->event.pressed) {
+        is_visual_mode = true;
+        is_visual_line_mode = true;
+        layer_on(6);
+        SEND_STRING (SS_TAP(X_HOME));
+        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_TAP(X_END));
+      }
+      return false;
+      break;
+    case VIM_ESC_VIS:
+      if (record->event.pressed) {
+        if (is_visual_mode) {
+          is_visual_mode = false;
+          is_visual_line_mode = false;
+          SEND_STRING (SS_UP(X_LSHIFT));
+          SEND_STRING (SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+          layer_off(6);
+          SEND_STRING (SS_TAP(X_ESCAPE));
+        } else {
+          SEND_STRING (SS_TAP(X_ESCAPE));
+        }
+      }
+      return false;
+      break;
+    case VIM_VS_DW:
+      if (record->event.pressed) {
+        SEND_STRING (SS_TAP(X_DOWN)SS_TAP(X_HOME)SS_TAP(X_END));
+      }
+      return false;
+      break;
+    case VIM_VS_UP:
+      if (record->event.pressed) {
+        SEND_STRING (SS_TAP(X_UP)SS_TAP(X_HOME)SS_TAP(X_END));
+      }
+      return false;
+      break;
+    case VIM_X:
+      if (record->event.pressed) {
+        if (is_visual_mode) {
+          SEND_STRING (SS_UP(X_LSHIFT)); //for visual mode
+          SEND_STRING (SS_LCTRL("x"));
+          is_visual_mode = false;
+          if (is_visual_line_mode) {
+            is_clipboard_visual_line = true;
+          } else {
+            is_clipboard_visual_line = false;
+          }
+        } else {
+          SEND_STRING (SS_DOWN(X_LSHIFT));
+          SEND_STRING (SS_TAP(X_RIGHT));
+          SEND_STRING (SS_UP(X_LSHIFT));
+          SEND_STRING (SS_LCTRL("x"));
+          SEND_STRING (SS_TAP(X_LEFT));
+          is_clipboard_visual_line = false;
+        }
+      }
+      return false;
+      break;
+    case VIM_Y:
+      if (record->event.pressed) {
+        if (is_visual_mode) {
+          SEND_STRING (SS_UP(X_LSHIFT)); // for visual mode
+          SEND_STRING (SS_LCTRL("c"));
+          SEND_STRING (SS_TAP(X_LEFT));
+          is_visual_mode = false;
+          if (is_visual_line_mode) {
+            is_clipboard_visual_line = true;
+          } else {
+            is_clipboard_visual_line = false;
+          }
+        }
+        is_clipboard_visual_line = false;
+      }
+      return false;
+      break;
   }
   return true;
+}
+
+void vim_dd(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 2) {
+    SEND_STRING (SS_TAP(X_HOME));
+    SEND_STRING (SS_DOWN(X_LSHIFT));
+    SEND_STRING (SS_TAP(X_END));
+    SEND_STRING (SS_UP(X_LSHIFT));
+    SEND_STRING (SS_LCTRL("x"));
+    SEND_STRING (SS_TAP(X_HOME));
+    SEND_STRING (SS_TAP(X_BSPACE));
+    is_clipboard_visual_line = true;
+  }
+}
+
+void vim_yy(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    if (is_visual_mode) {
+      SEND_STRING (SS_UP(X_LSHIFT)); // for visual mode
+      SEND_STRING (SS_LCTRL("c"));
+      SEND_STRING (SS_TAP(X_LEFT));
+      is_visual_mode = false;
+      if (is_visual_line_mode) {
+        is_clipboard_visual_line = true;
+      } else {
+        is_clipboard_visual_line = false;
+      }
+    }
+    is_clipboard_visual_line = false;
+  } else if (state->count == 2) {
+    SEND_STRING (SS_TAP(X_HOME));
+    SEND_STRING (SS_DOWN(X_LSHIFT));
+    SEND_STRING (SS_TAP(X_END));
+    SEND_STRING (SS_UP(X_LSHIFT));
+    SEND_STRING (SS_LCTRL("c"));
+    SEND_STRING (SS_TAP(X_HOME));
+    is_clipboard_visual_line = true;
+  }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [VIM_DD] = ACTION_TAP_DANCE_FN (vim_dd),
+  [VIM_YY] = ACTION_TAP_DANCE_FN (vim_yy)
+};
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    SEQ_ONE_KEY(KC_W) {
+      SEND_STRING (SS_LCTRL("s"));
+    }
+
+    SEQ_ONE_KEY(KC_E) {
+      SEND_STRING (SS_LCTRL("o"));
+    }
+
+    SEQ_ONE_KEY(KC_O) {
+      SEND_STRING (SS_LCTRL("o"));
+    }
+  }
 }
 
 uint32_t layer_state_set_user(uint32_t state) {
@@ -319,3 +548,4 @@ uint32_t layer_state_set_user(uint32_t state) {
     return state;
 
 };
+/* vim: set ts=2 sts=2 sw=2 expandtab: */
