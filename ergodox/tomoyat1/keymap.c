@@ -390,7 +390,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING (SS_TAP(X_RIGHT));
           SEND_STRING (SS_UP(X_LSHIFT));
           SEND_STRING (SS_LCTRL("x"));
-          SEND_STRING (SS_TAP(X_LEFT));
           is_clipboard_visual_line = false;
         }
       }
