@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Layer 0: Base layer
   [0] = KEYMAP(
                 //left hand
-                KC_EQUAL,       KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       KC_ESC,
+                KC_EQUAL,       KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
                 KC_GRV,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LGUI(LSFT(KC_ENT)),
                 KC_LCTL,        KC_A,       KC_S,       KC_D,       KC_F,       KC_G,
                 KC_LSFT,        KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       MEH(KC_SPC),
@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         KC_TRNS,    KC_0,       KC_DOT,     KC_EQUAL,       KC_TRNS,
                 KC_TRNS,    KC_TRNS,
                 KC_TRNS,
-                KC_TRNS,    KC_TRNS,    CLEAR),
+                KC_TRNS,    KC_TRNS,    KC_TRNS),
 
   // Layer 2:  Mouse
   [2] = KEYMAP(
@@ -252,8 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CLEAR:
       if (record->event.pressed) {
-        SEND_STRING ("clear");
-        SEND_STRING (SS_TAP(X_ENTER));
+        SEND_STRING (SS_LCTRL("l"));
       }
       return false;
       break;
