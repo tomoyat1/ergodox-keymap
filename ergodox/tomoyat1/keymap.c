@@ -10,6 +10,7 @@ enum custom_keycodes {
   EPRM,
   VRSN,
   RGB_SLD,
+  CLEAR,
   VIM_A,
   VIM_O,
   VIM_SHIFT_A,
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         KC_TRNS,    KC_0,       KC_DOT,     KC_EQUAL,       KC_TRNS,
                 KC_TRNS,    KC_TRNS,
                 KC_TRNS,
-                KC_TRNS,    KC_TRNS,    KC_TRNS),
+                KC_TRNS,    KC_TRNS,    CLEAR),
 
   // Layer 2:  Mouse
   [2] = KEYMAP(
@@ -246,6 +247,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
+      }
+      return false;
+      break;
+    case CLEAR:
+      if (record->event.pressed) {
+        SEND_STRING ("clear");
+        SEND_STRING (SS_TAP(X_ENTER));
       }
       return false;
       break;
