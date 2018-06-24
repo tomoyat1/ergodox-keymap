@@ -3,7 +3,14 @@
 #include "action_layer.h"
 #include "version.h"
 
-#define TAPPING_TERM 200
+#define BASE 0
+#define SYMBOLS 1
+#define MOUSE 2
+#define ESDF 3
+#define VIM_NORMAL 4
+#define VIM_NORMAL_SHIFTED 5
+#define VIM_VISUAL_LINE 6
+#define EMOJI 9
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -11,6 +18,7 @@ enum custom_keycodes {
   VRSN,
   RGB_SLD,
   CLEAR,
+  QUIT_VIM,
   VIM_A,
   VIM_O,
   VIM_SHIFT_A,
@@ -40,7 +48,7 @@ enum tap_dance_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Layer 0: Base layer
-  [0] = KEYMAP(
+  [BASE] = LAYOUT_ergodox(
                 //left hand
                 KC_EQUAL,       KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
                 KC_GRV,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LGUI(LSFT(KC_ENT)),
@@ -61,11 +69,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_PAUS, GUI_T(KC_ENT), KC_RSFT),
 
   // Layer 1:  Symbols
-  [1] = KEYMAP(
+  [SYMBOLS] = LAYOUT_ergodox(
                 //left hand
                 KC_ESCAPE,      KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,      KC_TRNS,
                 KC_TRNS,        KC_EXLM,    KC_AT,      KC_LCBR,    KC_RCBR,    KC_PIPE,    KC_TRNS,
-                KC_TRNS,        KC_HASH,    KC_DLR,     KC_LPRN,    KC_RPRN,    KC_GRV,
+                KC_TAB,         KC_HASH,    KC_DLR,     KC_LPRN,    KC_RPRN,    KC_GRV,
                 KC_TRNS,        KC_PERC,    KC_CIRC,    KC_LBRC,    KC_RBRC,    KC_TILD,    KC_TRNS,
                 KC_TRNS,        KC_AMPR,    KC_ASTR,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
@@ -82,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
 
   // Layer 2:  Mouse
-  [2] = KEYMAP(
+  [MOUSE] = LAYOUT_ergodox(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_MS_U,    KC_TRNS,    KC_TRNS,    KC_TRNS,
@@ -103,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_BTN2,    KC_BTN3,    KC_BTN1),
 
   // Layer 3: ESDF gaming layout
-  [3] = KEYMAP(
+  [ESDF] = LAYOUT_ergodox(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TAB,     KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,
@@ -124,19 +132,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
 
   // Layer 4: Universal vim controls
-  [4] = KEYMAP(
+  [VIM_NORMAL] = LAYOUT_ergodox(
                 //left hand
                 KC_NO,          KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        VIM_A,      KC_TRNS,    TD(VIM_DD), KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    VIM_X,      KC_TRNS,    VIM_V,      KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                QUIT_VIM,       KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
                     KC_TRNS,    KC_TRNS,    KC_TRNS,
                 //right hand
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    TD(VIM_YY), VIM_U,      TO(0),      VIM_O,      VIM_P,          KC_TRNS,
+                KC_TRNS,    TD(VIM_YY), VIM_U,      QUIT_VIM,   VIM_O,      VIM_P,          KC_TRNS,
                             KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
@@ -145,12 +153,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,    KC_TRNS,    MO(5)),
 
   // Layer 5: Universal vim controls shifted
-  [5] = KEYMAP(
+  [VIM_NORMAL_SHIFTED] = LAYOUT_ergodox(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        VIM_SHIFT_A,KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    TO(6),      KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
@@ -165,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
   // Layer 6: Universal vim controls visual line
-  [6] = KEYMAP(
+  [VIM_VISUAL_LINE] = LAYOUT_ergodox(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
@@ -181,11 +189,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             KC_NO,      VIM_VS_DW,  VIM_VS_UP,  KC_NO,      KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_TRNS,
+                KC_TRNS,    VIM_ESC_VIS,
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
   // Layer 9: Emoji
-  [9] = KEYMAP(
+  [EMOJI] = LAYOUT_ergodox(
                 //left hand
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
@@ -256,9 +264,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case QUIT_VIM:
+      if (record->event.pressed) {
+        SEND_STRING (SS_UP(X_LSHIFT));
+        layer_off(4);
+      }
+      return false;
+      break;
     case VIM_A:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_RIGHT));
+        SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(4);
       }
       return false;
@@ -266,6 +282,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_SHIFT_A:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_END));
+        SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(5);
         layer_off(4);
       }
@@ -274,6 +291,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_O:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_END)SS_TAP(X_ENTER));
+        SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(4);
       }
       return false;
@@ -282,6 +300,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_HOME)SS_TAP(X_ENTER));
         layer_off(5);
+        SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(4);
         SEND_STRING (SS_TAP(X_UP));
       }
@@ -291,6 +310,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_HOME));
         layer_off(5);
+        SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(4);
       }
       return false;
@@ -362,8 +382,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           SEND_STRING (SS_UP(X_LSHIFT));
           SEND_STRING (SS_TAP(X_LEFT)SS_TAP(X_LEFT));
           layer_off(6);
+          /*
+           * Unselects current text selection
+           * Conflicts with application-side vim-like key bindings
+           */
           SEND_STRING (SS_TAP(X_ESCAPE));
         } else {
+          /* Unselects current text selection */
           SEND_STRING (SS_TAP(X_ESCAPE));
         }
       }
