@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                 KC_TRNS,        VIM_SHIFT_A,KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    TO(6),      KC_TRNS,    KC_TRNS,
+                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    VIM_SHIFT_V,KC_TRNS,    KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
@@ -369,6 +369,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         is_visual_mode = true;
         is_visual_line_mode = true;
         layer_on(6);
+        layer_on(4);
+        layer_off(5);
         SEND_STRING (SS_TAP(X_HOME));
         SEND_STRING (SS_DOWN(X_LSHIFT));
         SEND_STRING (SS_TAP(X_END));
