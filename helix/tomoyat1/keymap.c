@@ -424,6 +424,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(4);
         SEND_STRING (SS_UP(X_LSHIFT));
         layer_off(3);
+        layer_off(5);
       }
       return false;
       break;
