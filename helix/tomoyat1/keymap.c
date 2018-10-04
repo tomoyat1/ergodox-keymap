@@ -644,29 +644,16 @@ static void render_logo(struct CharacterMatrix *matrix) {
     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
     0};
   matrix_write(matrix, logo);
-  //matrix_write_P(&matrix, PSTR(" Split keyboard kit"));
+  //matrix_write_P(matrix, PSTR(" Split keyboard kit"));
 }
 
 
 
 void render_status(struct CharacterMatrix *matrix) {
-
-  // Render to mode icon
-  static char logo[][2][3]={{{0x95,0x96,0},{0xb5,0xb6,0}},{{0x97,0x98,0},{0xb7,0xb8,0}}};
-  if(keymap_config.swap_lalt_lgui==false){
-    matrix_write(matrix, logo[0][0]);
-    matrix_write_P(matrix, PSTR("\n"));
-    matrix_write(matrix, logo[0][1]);
-  }else{
-    matrix_write(matrix, logo[1][0]);
-    matrix_write_P(matrix, PSTR("\n"));
-    matrix_write(matrix, logo[1][1]);
-  }
-
   // Define layers here, Have not worked out how to have text displayed for each layer. Copy down the number you see and add a case for it below
   char buf[40];
   snprintf(buf,sizeof(buf), "Undef-%ld", layer_state);
-  matrix_write_P(matrix, PSTR("\nLayer: "));
+  //matrix_write_P(matrix, PSTR("\nLayer: "));
     switch (layer_state) {
         case 0:
           /* fall-through */
@@ -682,10 +669,10 @@ void render_status(struct CharacterMatrix *matrix) {
         case L_VIM_NORMAL:
            matrix_write_P(matrix, PSTR("Vim normal"));
            break;
-        case L_VIM_SHIFTED_NORMAL:
+        case L_VIM_SHIFTED_NORMAL | L_VIM_NORMAL:
            matrix_write_P(matrix, PSTR("Vim normal (shifted)"));
            break;
-        case L_VIM_VISUAL_LINE:
+        case L_VIM_VISUAL_LINE | L_VIM_NORMAL:
            matrix_write_P(matrix, PSTR("Vim visual line"));
            break;
         default:
