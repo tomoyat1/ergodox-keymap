@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_EQUAL,                  KC_BSLS, KC_9,    KC_8,    KC_9,    KC_ASTR, KC_F12, \
       KC_TRNS, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_MINUS,                  GO_ERR,  KC_4,    KC_5,    KC_6,    KC_PLUS, KC_TRNS, \
       KC_TRNS, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, TERM,    TTERM,   KC_TAB,  KC_1,    KC_2,    KC_3,    KC_BSLS, KC_TRNS, \
-      TO(3),   KC_AMPR, KC_ASTR, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_0,    KC_DOT,  KC_EQUAL,KC_TRNS \
+      TO(3),   KC_AMPR, KC_ASTR, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL,  KC_TRNS, KC_TRNS, KC_TRNS, KC_0,    KC_DOT,  KC_EQUAL,KC_TRNS \
       ),
 
   /* Mouse keys
