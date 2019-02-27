@@ -126,3 +126,6 @@ endif
 # $(info -- RGBLIGHT_ENABLE=$(RGBLIGHT_ENABLE))
 # $(info -- OPT_DEFS=$(OPT_DEFS))
 # $(info )
+
+TAP_DANCE_ENABLE = yes
+

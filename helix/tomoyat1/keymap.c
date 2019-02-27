@@ -65,7 +65,48 @@ int is_clipboard_visual_line = false;
 enum tap_dance_keycodes {
   VIM_DD,
   VIM_YY
+};
 
+enum {
+  VIM_DD_ACTION = 0,
+  VIM_YY_ACTION
+};
+
+void dance_vim_dd_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 2) {
+    register_code (KC_HOME);
+    unregister_code (KC_HOME);
+    register_code (KC_LSFT);
+    register_code (KC_END);
+    unregister_code (KC_END);
+    unregister_code (KC_LSFT);
+    SEND_STRING (SS_LCTRL("x"));
+  }
+}
+
+void dance_vim_dd_reset (qk_tap_dance_state_t *state, void *user_data) {
+  return;
+}
+
+void dance_vim_yy_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 2) {
+    register_code (KC_HOME);
+    unregister_code (KC_HOME);
+    register_code (KC_LSFT);
+    register_code (KC_END);
+    unregister_code (KC_END);
+    unregister_code (KC_LSFT);
+    SEND_STRING (SS_LCTRL("c"));
+  }
+}
+
+void dance_vim_yy_reset (qk_tap_dance_state_t *state, void *user_data) {
+  return;
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [VIM_DD_ACTION] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_vim_dd_finished, dance_vim_dd_reset),
+  [VIM_YY_ACTION] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_vim_yy_finished, dance_vim_yy_reset),
 };
 
 enum macro_keycodes {
@@ -150,8 +191,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC,  KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS \
       ),
 
-#define TD_DD TD(VIM_DD)
-#define TD_YY TD(VIM_YY)
+#define TD_DD TD(VIM_DD_ACTION)
+#define TD_YY TD(VIM_YY_ACTION)
 #define QUIT_V QUIT_VIM
 #define VEV VIM_ESC_VIS
   /* Universal vim controls
@@ -428,17 +469,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case VIM_DD:
-      if (record->event.pressed) {
-        SEND_STRING (SS_TAP(X_HOME));
-        SEND_STRING (SS_DOWN(X_LSHIFT));
-        SEND_STRING (SS_TAP(X_END));
-        SEND_STRING (SS_UP(X_LSHIFT));
-        SEND_STRING (SS_LCTRL("x"));
-        SEND_STRING (SS_TAP(X_DELETE));
-      }
-      return false;
-      break;
     case VIM_P:
       if (record->event.pressed) {
         if (is_clipboard_visual_line) {
@@ -709,3 +739,4 @@ void iota_gfx_task_user(void) {
 }
 
 #endif
+/* vim:set ts=2 sts=2 sw=2 expandtab: */
