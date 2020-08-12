@@ -51,8 +51,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Layer 0: Base layer
   [BASE] = LAYOUT_ergodox(
                 //left hand
-                KC_EQUAL,       KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
-                KC_GRV,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LGUI(LSFT(KC_ENT)),
+                KC_GRV,         KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
+                KC_TAB,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LGUI(LSFT(KC_ENT)),
                 KC_LCTL,        KC_A,       KC_S,       KC_D,       KC_F,       KC_G,
                 KC_LSFT,        KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       MEH(KC_SPC),
                 TG(4),          KC_LGUI,    KC_LALT,    TG(3),      MO(2),
