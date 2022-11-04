@@ -52,15 +52,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_ergodox(
                 //left hand
                 KC_GRV,         KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
-                KC_TAB,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LGUI(LSFT(KC_ENT)),
+                KC_TAB,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LSG(KC_ENT),
                 KC_LCTL,        KC_A,       KC_S,       KC_D,       KC_F,       KC_G,
                 KC_LSFT,        KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       MEH(KC_SPC),
                 TG(4),          KC_LGUI,    KC_LALT,    TG(3),      MO(2),
                                 KC_DEL,     KC_INS,
-                                           KC_MEH,
-                           KC_SPC, KC_BSPC,KC_PSCR,
+                                            KC_MEH,
+                     KC_SPC,    KC_BSPC,    KC_PSCR,
                 //right hand
-                TG(1),       KC_6,       KC_7,       KC_8,       KC_9,       KC_0,           KC_MINUS,
+                TG(1),       KC_6,       KC_7,       KC_8,       KC_9,       KC_0,          KC_MINUS,
                 LGUI(KC_ENT),KC_Y,      KC_U,       KC_I,       KC_O,       KC_P,           KC_BSLS,
                             KC_H,       KC_J,       KC_K,       KC_L,       KC_SCLN,        KC_QUOT,
                 KC_TAB,     KC_N,       KC_M,       KC_COMM,    KC_DOT,     KC_SLSH,        KC_LSFT,
@@ -90,26 +90,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS),
 
-  // Layer 2:  Mouse
+  // Layer 2:  Tiling window manager (Amethyst)
   [MOUSE] = LAYOUT_ergodox(
                 //left hand
-                KC_SLEP,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_MS_U,    KC_TRNS,    KC_TRNS,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_MS_L,    KC_MS_D,    KC_MS_R,    KC_TRNS,
-                KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
+                KC_SLEP,        LSA(KC_1),  LSA(KC_2),  LSA(KC_3),  LSA(KC_4),  LSA(KC_5),  KC_TRNS,
+                KC_TRNS,        LSA(KC_Q),  LSA(KC_W),  LSA(KC_E),  LSA(KC_R),  LSA(KC_T),  LSA(KC_Y),
+                KC_TRNS,        LSA(KC_A),  LSA(KC_S),  LSA(KC_D),  LSA(KC_F),  LSA(KC_G),
+                KC_TRNS,        LSA(KC_Z),  LSA(KC_X),  LSA(KC_C),  LSA(KC_V),  LSA(KC_B),  KC_TRNS,
                 KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,
                                 KC_TRNS,    KC_TRNS,
                                             KC_TRNS,
-                    KC_WBAK,    KC_WFWD,    KC_NO,
+                    KC_TRNS,    KC_TRNS,    KC_NO,
                 //right hand
-                KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_MPLY,    KC_MSTP,    KC_MNXT,        RESET,
-                KC_TRNS,    KC_VOLU,    KC_TRNS,    KC_WH_U,    KC_TRNS,    KC_TRNS,        VRSN,
-                            KC_VOLD,    KC_WH_L,    KC_WH_D,    KC_WH_R,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_MUTE,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                                        KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-                KC_TRNS,    KC_TRNS,
+                KC_TRNS,    LSA(KC_6),  LSA(KC_7),  LSA(KC_8),    LSA(KC_9),    LSA(KC_0),    RESET,
+                KC_TRNS,    LSA(KC_Y),  LSA(KC_U),  LSA(KC_I),    LSA(KC_O),    LSA(KC_P),    VRSN,
+                            LSA(KC_H),  LSA(KC_J),  LSA(KC_K),    LSA(KC_L),    KC_TRNS,      KC_TRNS,
+                KC_TRNS,    KC_TRNS,    LSA(KC_M),  LSA(KC_COMM), LSA(KC_DOT),  LSA(KC_SLSH), KC_TRNS,
+                                        KC_TRNS,    MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_UP),   MEH(KC_RGHT),
+                KC_TRNS,    KC_LCTL,
                 KC_TRNS,
-                KC_BTN2,    KC_BTN3,    KC_BTN1),
+
 
   // Layer 3: ESDF gaming layout
   [ESDF] = LAYOUT_ergodox(
