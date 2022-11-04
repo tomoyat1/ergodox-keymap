@@ -105,11 +105,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_TRNS,    LSA(KC_6),  LSA(KC_7),  LSA(KC_8),    LSA(KC_9),    LSA(KC_0),    RESET,
                 KC_TRNS,    LSA(KC_Y),  LSA(KC_U),  LSA(KC_I),    LSA(KC_O),    LSA(KC_P),    VRSN,
                             LSA(KC_H),  LSA(KC_J),  LSA(KC_K),    LSA(KC_L),    KC_TRNS,      KC_TRNS,
-                KC_TRNS,    KC_TRNS,    LSA(KC_M),  LSA(KC_COMM), LSA(KC_DOT),  LSA(KC_SLSH), KC_TRNS,
+                KC_TRNS,    LSA(KC_N),  LSA(KC_M),  LSA(KC_COMM), LSA(KC_DOT),  LSA(KC_SLSH), KC_TRNS,
                                         KC_TRNS,    MEH(KC_LEFT), MEH(KC_DOWN), MEH(KC_UP),   MEH(KC_RGHT),
                 KC_TRNS,    KC_LCTL,
                 KC_TRNS,
-
+                KC_TRNS,    LSA(KC_ENT),LSA(KC_SPC)),
 
   // Layer 3: ESDF gaming layout
   [ESDF] = LAYOUT_ergodox(
