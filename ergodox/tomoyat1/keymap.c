@@ -43,7 +43,8 @@ int is_clipboard_visual_line = false;
 
 enum tap_dance_keycodes {
   VIM_DD,
-  VIM_YY
+  VIM_YY,
+  LCTL_LCMD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -53,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 //left hand
                 KC_GRV,         KC_1,       KC_2,       KC_3,       KC_4,       KC_5,       CLEAR,
                 KC_TAB,         KC_Q,       KC_W,       KC_E,       KC_R,       KC_T,       LSG(KC_ENT),
-                KC_LCTL,        KC_A,       KC_S,       KC_D,       KC_F,       KC_G,
+                TD(LCTL_LCMD),   KC_A,       KC_S,       KC_D,       KC_F,       KC_G,
                 KC_LSFT,        KC_Z,       KC_X,       KC_C,       KC_V,       KC_B,       MEH(KC_SPC),
                 TG(4),          KC_LGUI,    KC_LALT,    TG(3),      MO(2),
                                 KC_DEL,     KC_INS,
@@ -485,7 +486,8 @@ void vim_yy(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [VIM_DD] = ACTION_TAP_DANCE_FN (vim_dd),
-  [VIM_YY] = ACTION_TAP_DANCE_FN (vim_yy)
+  [VIM_YY] = ACTION_TAP_DANCE_FN (vim_yy),
+  [LCTL_LCMD] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_LGUI)
 };
 
 LEADER_EXTERNS();
