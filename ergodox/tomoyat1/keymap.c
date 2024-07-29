@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             KC_TRNS,
                     KC_TRNS,    KC_TRNS,    KC_NO,
                 //right hand
-                KC_TRNS,    LSA(KC_6),  LSA(KC_7),  LSA(KC_8),    LSA(KC_9),    LSA(KC_0),    RESET,
+                KC_TRNS,    LSA(KC_6),  LSA(KC_7),  LSA(KC_8),    LSA(KC_9),    LSA(KC_0),    QK_BOOT,
                 KC_TRNS,    LSA(KC_Y),  LSA(KC_U),  LSA(KC_I),    LSA(KC_O),    LSA(KC_P),    VRSN,
                             LSA(KC_H),  LSA(KC_J),  LSA(KC_K),    LSA(KC_L),    KC_TRNS,      KC_TRNS,
                 KC_TRNS,    LSA(KC_N),  LSA(KC_M),  LSA(KC_COMM), LSA(KC_DOT),  LSA(KC_SLSH), KC_TRNS,
@@ -168,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 //right hand
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    VIM_SHIFT_I,VIM_SHIFT_O,KC_TRNS,        KC_TRNS,
-                            KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    KC_LEAD,        KC_TRNS,
+                            KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT,    QK_LEAD,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_MPRV,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                                         KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
                 KC_TRNS,    KC_TRNS,
@@ -249,13 +249,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CLEAR:
       if (record->event.pressed) {
-        SEND_STRING (SS_LCTRL("l"));
+        SEND_STRING (SS_LCTL("l"));
       }
       return false;
       break;
     case QUIT_VIM:
       if (record->event.pressed) {
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(4);
       }
       return false;
@@ -263,7 +263,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_A:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_RIGHT));
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(4);
       }
       return false;
@@ -271,7 +271,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_SHIFT_A:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_END));
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(5);
         layer_off(4);
       }
@@ -280,7 +280,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_O:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_END)SS_TAP(X_ENTER));
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(4);
       }
       return false;
@@ -289,7 +289,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_HOME)SS_TAP(X_ENTER));
         layer_off(5);
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(4);
         SEND_STRING (SS_TAP(X_UP));
       }
@@ -299,7 +299,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_HOME));
         layer_off(5);
-        SEND_STRING (SS_UP(X_LSHIFT));
+        SEND_STRING (SS_UP(X_LSFT));
         layer_off(4);
       }
       return false;
@@ -307,10 +307,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_DD:
       if (record->event.pressed) {
         SEND_STRING (SS_TAP(X_HOME));
-        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_DOWN(X_LSFT));
         SEND_STRING (SS_TAP(X_END));
-        SEND_STRING (SS_UP(X_LSHIFT));
-        SEND_STRING (SS_LCTRL("x"));
+        SEND_STRING (SS_UP(X_LSFT));
+        SEND_STRING (SS_LCTL("x"));
         SEND_STRING (SS_TAP(X_DELETE));
       }
       return false;
@@ -319,10 +319,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (is_clipboard_visual_line) {
           SEND_STRING (SS_TAP(X_END)SS_TAP(X_ENTER));
-          SEND_STRING (SS_LCTRL("v"));
+          SEND_STRING (SS_LCTL("v"));
         } else {
           SEND_STRING (SS_TAP(X_RIGHT));
-          SEND_STRING (SS_LCTRL("v"));
+          SEND_STRING (SS_LCTL("v"));
         }
       }
       return false;
@@ -331,23 +331,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         if (is_clipboard_visual_line) {
           SEND_STRING (SS_TAP(X_HOME)SS_TAP(X_ENTER));
-          SEND_STRING (SS_LCTRL("v"));
+          SEND_STRING (SS_LCTL("v"));
         } else {
-          SEND_STRING (SS_LCTRL("v"));
+          SEND_STRING (SS_LCTL("v"));
         }
       }
       return false;
       break;
     case VIM_U:
       if (record->event.pressed) {
-        SEND_STRING (SS_LCTRL("z"));
+        SEND_STRING (SS_LCTL("z"));
       }
       return false;
       break;
     case VIM_V:
       if (record->event.pressed) {
         is_visual_mode = true;
-        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_DOWN(X_LSFT));
         SEND_STRING (SS_TAP(X_RIGHT));
       }
       return false;
@@ -360,7 +360,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(4);
         layer_off(5);
         SEND_STRING (SS_TAP(X_HOME));
-        SEND_STRING (SS_DOWN(X_LSHIFT));
+        SEND_STRING (SS_DOWN(X_LSFT));
         SEND_STRING (SS_TAP(X_END));
       }
       return false;
@@ -370,7 +370,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (is_visual_mode) {
           is_visual_mode = false;
           is_visual_line_mode = false;
-          SEND_STRING (SS_UP(X_LSHIFT));
+          SEND_STRING (SS_UP(X_LSFT));
           SEND_STRING (SS_TAP(X_LEFT)SS_TAP(X_LEFT));
           layer_off(6);
           /*
@@ -400,8 +400,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_X:
       if (record->event.pressed) {
         if (is_visual_mode) {
-          SEND_STRING (SS_UP(X_LSHIFT)); //for visual mode
-          SEND_STRING (SS_LCTRL("x"));
+          SEND_STRING (SS_UP(X_LSFT)); //for visual mode
+          SEND_STRING (SS_LCTL("x"));
           is_visual_mode = false;
           if (is_visual_line_mode) {
             is_clipboard_visual_line = true;
@@ -409,10 +409,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             is_clipboard_visual_line = false;
           }
         } else {
-          SEND_STRING (SS_DOWN(X_LSHIFT));
+          SEND_STRING (SS_DOWN(X_LSFT));
           SEND_STRING (SS_TAP(X_RIGHT));
-          SEND_STRING (SS_UP(X_LSHIFT));
-          SEND_STRING (SS_LCTRL("x"));
+          SEND_STRING (SS_UP(X_LSFT));
+          SEND_STRING (SS_LCTL("x"));
           is_clipboard_visual_line = false;
         }
       }
@@ -421,8 +421,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_Y:
       if (record->event.pressed) {
         if (is_visual_mode) {
-          SEND_STRING (SS_UP(X_LSHIFT)); // for visual mode
-          SEND_STRING (SS_LCTRL("c"));
+          SEND_STRING (SS_UP(X_LSFT)); // for visual mode
+          SEND_STRING (SS_LCTL("c"));
           SEND_STRING (SS_TAP(X_LEFT));
           is_visual_mode = false;
           if (is_visual_line_mode) {
@@ -446,24 +446,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-void vim_dd(qk_tap_dance_state_t *state, void *user_data) {
+void vim_dd(tap_dance_state_t *state, void *user_data) {
   if (state->count == 2) {
     SEND_STRING (SS_TAP(X_HOME));
-    SEND_STRING (SS_DOWN(X_LSHIFT));
+    SEND_STRING (SS_DOWN(X_LSFT));
     SEND_STRING (SS_TAP(X_END));
-    SEND_STRING (SS_UP(X_LSHIFT));
-    SEND_STRING (SS_LCTRL("x"));
+    SEND_STRING (SS_UP(X_LSFT));
+    SEND_STRING (SS_LCTL("x"));
     SEND_STRING (SS_TAP(X_HOME));
-    SEND_STRING (SS_TAP(X_BSPACE));
+    SEND_STRING (SS_TAP(X_BSPC));
     is_clipboard_visual_line = true;
   }
 }
 
-void vim_yy(qk_tap_dance_state_t *state, void *user_data) {
+void vim_yy(tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     if (is_visual_mode) {
-      SEND_STRING (SS_UP(X_LSHIFT)); // for visual mode
-      SEND_STRING (SS_LCTRL("c"));
+      SEND_STRING (SS_UP(X_LSFT)); // for visual mode
+      SEND_STRING (SS_LCTL("c"));
       SEND_STRING (SS_TAP(X_LEFT));
       is_visual_mode = false;
       if (is_visual_line_mode) {
@@ -475,39 +475,28 @@ void vim_yy(qk_tap_dance_state_t *state, void *user_data) {
     is_clipboard_visual_line = false;
   } else if (state->count == 2) {
     SEND_STRING (SS_TAP(X_HOME));
-    SEND_STRING (SS_DOWN(X_LSHIFT));
+    SEND_STRING (SS_DOWN(X_LSFT));
     SEND_STRING (SS_TAP(X_END));
-    SEND_STRING (SS_UP(X_LSHIFT));
-    SEND_STRING (SS_LCTRL("c"));
+    SEND_STRING (SS_UP(X_LSFT));
+    SEND_STRING (SS_LCTL("c"));
     SEND_STRING (SS_TAP(X_HOME));
     is_clipboard_visual_line = true;
   }
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
   [VIM_DD] = ACTION_TAP_DANCE_FN (vim_dd),
   [VIM_YY] = ACTION_TAP_DANCE_FN (vim_yy),
   [LCTL_LCMD] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_LGUI)
 };
 
-LEADER_EXTERNS();
-
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    SEQ_ONE_KEY(KC_W) {
-      SEND_STRING (SS_LCTRL("s"));
-    }
-
-    SEQ_ONE_KEY(KC_E) {
-      SEND_STRING (SS_LCTRL("o"));
-    }
-
-    SEQ_ONE_KEY(KC_O) {
-      SEND_STRING (SS_LCTRL("o"));
-    }
+void leader_end_user(void) {
+  if (leader_sequence_one_key(KC_W)) {
+    SEND_STRING (SS_LCTL("s"));
+  } else if (leader_sequence_one_key(KC_E)) {
+    SEND_STRING (SS_LCTL("o"));
+  } else if (leader_sequence_one_key(KC_O)) {
+    SEND_STRING (SS_LCTL("o"));
   }
 }
 
